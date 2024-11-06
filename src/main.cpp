@@ -35,8 +35,6 @@ bool checkSym (float* m, const unsigned int size) {
 int main() {
     srand(time(NULL));
     initialize_matrix(reinterpret_cast<float *>(M), SIZE, SIZE);
-    printMatrix(reinterpret_cast<float *>(M), SIZE, SIZE);
     bool res = checkSym((float*) M, SIZE);
-    printMatrix(reinterpret_cast<float *>(M_transposed), SIZE, SIZE);
     return 0;
 }
