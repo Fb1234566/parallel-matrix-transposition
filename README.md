@@ -14,5 +14,4 @@ If needed, the executable can be built with the debugging flag. In order to do s
 ```shell
 make debug
 ```
-
 The executable will be located at `` bin/debug/a.out ``
