@@ -7,7 +7,7 @@ float rand_float(int min, int max) {
     max = max * 10000;
     min = min * 10000;
 
-    return (float)(rand() % (max - min) + min)/(float)10000 ;
+    return static_cast<float>(rand() % (max - min) + min)/(float)10000 ;
 }
 
 void initialize_matrix(float* m, const unsigned int rows, const unsigned int cols) {
