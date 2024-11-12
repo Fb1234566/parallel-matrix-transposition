@@ -67,7 +67,8 @@ int main(int argc, char* argv[]) {
     M = initialize_matrix(size, size);
     std::cout << "Parallel Matrix Transposition" << std::endl;
     std::cout << "-----------------------------" << std::endl;
-    /*---------Serail section---------*/
+
+    /*---------Serial section---------*/
     std::cout << "[1] Parallel section:" << std::endl;
     const clock_t t0_seq = clock();
     const bool sym = checkSym(M, size);
