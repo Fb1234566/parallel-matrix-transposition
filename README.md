@@ -19,6 +19,6 @@ The executable will be located at `` bin/debug/a.out ``
 ## Execution instructions
 
 The executable generated using the steps in the [Build instructions](#build-intructions) and [Debug instructions](#debug-instructions)
-support the passage of parameters via command line arguments. The possible arguments are:
+supports the passing of parameters via command line arguments. The possible arguments are:
 - -s \<size\>: Mandatory parameter used to set the size of the matrix
 - -h: Show help information to the user
