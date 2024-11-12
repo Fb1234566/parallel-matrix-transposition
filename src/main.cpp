@@ -3,8 +3,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
+#include <vector>
 
-void matTranspose (const float* m, float* m_transposed, const unsigned int size) {
+std::vector<std::vector<float>> matTranspose (const std::vector<std::vector<float>> &m, const unsigned int size) {
 /*
     Transposes square matrix
     Parameters:
@@ -12,14 +13,16 @@ void matTranspose (const float* m, float* m_transposed, const unsigned int size)
         - m_transposed: matrix used to save the transposition of m
         - size: size of the square matrix
 */
+    std::vector<std::vector<float>> m_transposed (size, std::vector<float>(size));
     for (unsigned int i = 0; i < size; i++) {
         for (unsigned int j = 0; j < size; j++) {
-            m_transposed[j+i*size] = m[i+j*size];
+            m_transposed[i][j] = m[j][i];
         }
     }
+    return m_transposed;
 }
 
-bool checkSym (const float* m, const unsigned int size) {
+bool checkSym (const std::vector<std::vector<float>>& m, const unsigned int size) {
 /*
     Checks if a square matrix is symmetric
     Parameters:
@@ -27,12 +30,10 @@ bool checkSym (const float* m, const unsigned int size) {
         - size: dimensions of the matrix.
 */
 
-    float m_transposed[size][size];
-    matTranspose(m, reinterpret_cast<float * >(m_transposed), size);
-    if (checkEqual(m, reinterpret_cast<float *>(m_transposed), size, size)) {
-        return true;
-    }
-    return false;
+    std::vector<std::vector<float>> m_transposed(size, std::vector<float>(size));
+    m_transposed = matTranspose(m, size);
+    matTranspose(m, size);
+    return checkEqual(m, m_transposed, size, size);
 }
 
 
@@ -94,13 +95,13 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    float M[size][size];
-    initialize_matrix(reinterpret_cast<float *>(M), size, size);
+    std::vector<std::vector<float>> M (size, std::vector<float>(size));
+    M = initialize_matrix(size, size);
     std::cout << "Parallel Matrix Transposition" << std::endl;
     std::cout << "-----------------------------" << std::endl;
     std::cout << "[1] Parallel section:" << std::endl;
     const clock_t t0_seq = clock();
-    const bool sym = checkSym(reinterpret_cast<float *>(M), size);
+    const bool sym = checkSym(M, size);
     const clock_t t1_seq = clock();
     if (sym) {
         std::cout<<"Matrix is symmetric!"<<std::endl;
