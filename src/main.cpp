@@ -32,8 +32,7 @@ bool checkSym (const std::vector<std::vector<float>>& m, const unsigned int size
 
     std::vector<std::vector<float>> m_transposed(size, std::vector<float>(size));
     m_transposed = matTranspose(m, size);
-    matTranspose(m, size);
-    return checkEqual(m, m_transposed, size, size);
+    return m==m_transposed;
 }
 
 

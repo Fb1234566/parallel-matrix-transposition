@@ -22,18 +22,6 @@ std::vector<std::vector<float>> initialize_matrix(const unsigned int rows, const
     return m;
 }
 
-bool checkEqual(const std::vector<std::vector<float>> &M1, const std::vector<std::vector<float>> &M2, const unsigned int rows, const unsigned int cols) {
-    // Function to check if the two matrices are equal
-    for (unsigned int i = 0; i < rows; ++i) {
-        for (unsigned int j = 0; j < cols; ++j) {
-            if (M1[i][j] != M2[i][j]) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 void printMatrix(const std::vector<std::vector<float>> &M, const unsigned int rows, const unsigned int cols) {
     // Function to print the matrix to stdout. Used for debugging
     for (unsigned int i = 0; i < rows; ++i) {
