@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../include/utility.h"
 #include "../include/serial.h"
+#include "../include/implicitParallelism.h"
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
@@ -11,7 +12,11 @@ int main(int argc, char* argv[]) {
     bool command = false; // used to check if a command has been passed via parameters
     int size = -1;
 
-    // take input parameters
+    /* Take input parameters from shell
+       Parameters:
+           -h -> show help message
+           -s <size> -> set the matrix size
+    */
     if (argc == 1) {
         // checks if there are no arguments
         std::cerr << "Missing arguments!" << std::endl;
@@ -63,6 +68,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    /* Setup matrix to be transposed */
     std::vector<std::vector<float>> M (size, std::vector<float>(size));
     M = initialize_matrix(size, size);
     std::cout << "Parallel Matrix Transposition" << std::endl;
@@ -70,15 +76,42 @@ int main(int argc, char* argv[]) {
 
     /*---------Serial section---------*/
     std::cout << "[1] Parallel section:" << std::endl;
-    const clock_t t0_seq = clock();
-    const bool sym = checkSym(M, size);
-    const clock_t t1_seq = clock();
+    bool sym = false;
+    double sum_serial = 0.0;
+    for(int i = 0; i < 10; i++) {
+        const clock_t t0_seq = clock();
+        sym = checkSym(M, size);
+        const clock_t t1_seq = clock();
+        sum_serial+=(static_cast<double>(t1_seq - t0_seq)) / CLOCKS_PER_SEC;
+    }
     if (sym) {
         std::cout<<"Matrix is symmetric!"<<std::endl;
     }
     else {
         std::cout<<"Matrix is not symmetric!"<<std::endl;
     }
-    std::cout << "Time: " << (static_cast<double>(t1_seq - t0_seq)) / CLOCKS_PER_SEC << " sec" << std::endl;
+    std::cout << "Average time: " << sum_serial/10.0 << " sec" << std::endl;
+
+    /*---------Implicit parallelism section---------*/
+    std::cout << "*************************************" << std::endl;
+    std::cout << "[2] Implicit parallelization section:" << std::endl;
+    bool sym_impl = false;
+    double sum_impl = 0.0;
+    for (unsigned int i = 0; i < 10; i++) {
+        const clock_t t0_impl = clock();
+        sym_impl = checkSymImp(M, size);
+        const clock_t t1_impl = clock();
+        sum_impl += (static_cast<double>(t1_impl - t0_impl)) / CLOCKS_PER_SEC;
+    }
+
+    if (sym_impl) {
+        std::cout<<"Matrix is symmetric!"<<std::endl;
+    }
+    else {
+        std::cout<<"Matrix is not symmetric!"<<std::endl;
+    }
+
+
+    std::cout << "Time: " << sum_impl/10.0<< " sec" << std::endl;
     return 0;
 }
