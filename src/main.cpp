@@ -2,10 +2,12 @@
 #include "../include/utility.h"
 #include "../include/serial.h"
 #include "../include/implicitParallelism.h"
+#include "../include/openmp.h"
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <vector>
+#include <omp.h>
 
 int main(int argc, char* argv[]) {
     srand(time(nullptr)); // sets the random seed
@@ -113,5 +115,26 @@ int main(int argc, char* argv[]) {
 
 
     std::cout << "Time: " << sum_impl/10.0<< " sec" << std::endl;
+    /*---------OMP parallel section---------*/
+    std::cout << "*************************************" << std::endl;
+    std::cout << "[2]OpenMP section:" << std::endl;
+    bool sym_omp = false;
+    double sum_omp = 0.0;
+    for (unsigned int i = 0; i < 10; i++) {
+        const double t0_omp = omp_get_wtime();
+        sym_omp = checkSymOMP(M, size);
+        const double t1_omp = omp_get_wtime();
+        sum_omp += (t1_omp - t0_omp);
+    }
+
+    if (sym_omp) {
+        std::cout<<"Matrix is symmetric!"<<std::endl;
+    }
+    else {
+        std::cout<<"Matrix is not symmetric!"<<std::endl;
+    }
+
+
+    std::cout << "Time: " << sum_omp/10.0<< " sec" << std::endl;
     return 0;
 }
