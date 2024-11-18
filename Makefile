@@ -8,7 +8,7 @@ openmp_cpp_files := $(shell find src -name openmp.cpp)
 openmp_obj_files := $(patsubst src/%.cpp, bin/obj/%.o, $(openmp_cpp_files))
 
 utility_cpp_files := $(shell find src -name utility.cpp)
-utility_obj_files := $(patsubst src/%.cpp, bin/obj/%.o, $(utility_cpp_file))
+utility_obj_files := $(patsubst src/%.cpp, bin/obj/%.o, $(utility_cpp_files))
 
 CPPFLAGSSR = -Iinclude -fopenmp -std=c++11 # serial compilation flags
 CPPFLAGSIM = -Iinclude -O1 -std=c++11 # implicit parallelism cserial_cpp_filesompilation flags
@@ -17,7 +17,6 @@ CPPFLAGSIM = -Iinclude -O1 -std=c++11 # implicit parallelism cserial_cpp_filesom
 obj_files := $(serial_obj_files) $(implicit_parallelism_obj_files) $(utility_obj_files) $(openmp_obj_files)
 
 $(implicit_parallelism_obj_files): bin/obj/%.o : src/%.cpp
-	$(info $(CPPFLAGSIM))
 	mkdir -p $(dir $@) && \
 	g++ -c $(patsubst bin/obj/%.o, src/%.cpp, $@) -o $@ $(CPPFLAGSIM)
 
@@ -25,11 +24,11 @@ $(serial_obj_files): bin/obj/%.o : src/%.cpp
 	mkdir -p $(dir $@) && \
 	g++ -c $(patsubst bin/obj/%.o, src/%.cpp, $@) -o $@ $(CPPFLAGSSR)
 
-$(openmp_obj_files): bin/obj/%.o src/%.cpp
+$(openmp_obj_files): bin/obj/%.o : src/%.cpp
 	mkdir -p $(dir $@) && \
 	g++ -c $(patsubst bin/obj/%.o, src/%.cpp, $@) -o $@ $(CPPFLAGSSR)
 
-$(utility_obj_files): bin/obj/%.o src/%.cpp
+$(utility_obj_files): bin/obj/%.o : src/%.cpp
 	mkdir -p $(dir $@) && \
 	g++ -c $(patsubst bin/obj/%.o, src/%.cpp, $@) -o $@ $(CPPFLAGSSR)
 
