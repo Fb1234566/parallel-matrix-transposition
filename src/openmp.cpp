@@ -44,19 +44,16 @@ bool checkEqualOMP (const std::vector<std::vector<float>>& m, const std::vector<
     int final = 0;
     int res = 0;
     #pragma omp parallel
-        {
-        #pragma omp for collapse(2) reduction(+:res)
+    {
+#pragma omp for collapse(2)
         for (unsigned int i = 0; i < size; i++) {
             for (unsigned int j = 0; j < size; j++) {
-                res += m[i][j] == m1[i][j];
+                if (m[i][j] != m1[i][j]) {
+                    return false;
+                }
             }
         }
-
-
-        #pragma  omp critical
-            final += res;
     }
-
-    return final == (size*size);
+    return true;
 }
 
