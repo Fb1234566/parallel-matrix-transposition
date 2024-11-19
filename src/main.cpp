@@ -72,6 +72,7 @@ int main(int argc, char* argv[]) {
 
     /* Setup matrix to be transposed */
     std::vector<std::vector<float>> M (size, std::vector<float>(size));
+    std::vector<std::vector<float>> T (size, std::vector<float>(size));
     M = initialize_matrix(size, size);
     std::cout << "Parallel Matrix Transposition" << std::endl;
     std::cout << "-----------------------------" << std::endl;
@@ -123,6 +124,7 @@ int main(int argc, char* argv[]) {
     for (unsigned int i = 0; i < 10; i++) {
         const double t0_omp = omp_get_wtime();
         sym_omp = checkSymOMP(M, size);
+        T = matTransposeOMP(M, size);
         const double t1_omp = omp_get_wtime();
         sum_omp += (t1_omp - t0_omp);
     }

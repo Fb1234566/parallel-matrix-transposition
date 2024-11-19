@@ -27,28 +27,15 @@ bool checkSymOMP (const std::vector<std::vector<float>>& m, const unsigned int s
             - m: matrix to check for symmetry
             - size: dimensions of the matrix.
     */
-
-    std::vector<std::vector<float>> m_transposed(size, std::vector<float>(size));
-    m_transposed = matTransposeOMP(m, size);
-    return checkEqualOMP(m_transposed, m, size);
-}
-
-bool checkEqualOMP (const std::vector<std::vector<float>>& m, const std::vector<std::vector<float>>& m1, unsigned int size) {
-    /*
-     Checks if two matrices are equal
-     Parameters:
-        -m: first matrix
-        -m1: second matrix
-        -size: size of the two matrices
-    */
-    #pragma omp parallel for collapse(2)
-    for (unsigned int i = 0; i < size; i++) {
-        for (unsigned int j = 0; j < size; j++) {
-            if (m[i][j] != m[j][i]) {
-                return false;
+    int sum = 0;
+    #pragma omp parallel
+    {
+        #pragma omp for collapse(2) reduction(+:sum)
+        for(unsigned int i = 0; i < size; i++) {
+            for(unsigned int j = 0; j < size; j++) {
+                sum += m[i][j] == m[j][i];
             }
         }
     }
-    return true;
+    return (sum == (size*size));
 }
-
