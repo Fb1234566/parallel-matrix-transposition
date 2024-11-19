@@ -27,15 +27,15 @@ bool checkSymOMP (const std::vector<std::vector<float>>& m, const unsigned int s
             - m: matrix to check for symmetry
             - size: dimensions of the matrix.
     */
-    int sum = 0;
+    bool res = true;
     #pragma omp parallel
     {
-        #pragma omp for collapse(2) reduction(+:sum)
+        #pragma omp for collapse(2) reduction(||:res)
         for(unsigned int i = 0; i < size; i++) {
             for(unsigned int j = 0; j < size; j++) {
-                sum += m[i][j] == m[j][i];
+                res = (m[i][j] == m[j][i]) || res;
             }
         }
     }
-    return (sum == (size*size));
+    return res;
 }
