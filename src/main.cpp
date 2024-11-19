@@ -103,6 +103,7 @@ int main(int argc, char* argv[]) {
     for (unsigned int i = 0; i < 10; i++) {
         const clock_t t0_impl = clock();
         sym_impl = checkSymImp(M, size);
+        T = matTransposeImp(M, size);
         const clock_t t1_impl = clock();
         sum_impl += (static_cast<double>(t1_impl - t0_impl)) / CLOCKS_PER_SEC;
     }
