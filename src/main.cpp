@@ -104,7 +104,6 @@ int main(int argc, char* argv[]) {
         }
     }
 
-
     // files where results are saved
     std::ofstream resSerial;
     std::ofstream resImpParallelism;
@@ -121,7 +120,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Size: " << size << " : " << std::endl;
         /*---------Serial section---------*/
         std::cout << "[1] Parallel section:" << std::endl;
-        resSerial.open("export/serial.csv");
+        resSerial.open("export/serial.csv", std::ios::app);
         if (!resSerial.is_open()) {
             std::cerr << "Could not open file export/serial.csv" << std::endl;
             return -1;
@@ -151,7 +150,7 @@ int main(int argc, char* argv[]) {
         std::cout << "[2] Implicit parallelization section:" << std::endl;
         bool sym_impl = false;
         double sum_impl = 0.0;
-        resImpParallelism.open("export/implicit_parallelism.csv");
+        resImpParallelism.open("export/implicit_parallelism.csv", std::ios::app);
         if (!resImpParallelism.is_open()) {
             std::cerr << "Could not open file export/implicit_parallelism.csv" << std::endl;
             return -1;
@@ -181,7 +180,7 @@ int main(int argc, char* argv[]) {
         std::cout << "[3]OpenMP section:" << std::endl;
         bool sym_omp = false;
         double sum_omp = 0.0;
-        resOpenMP.open("export/openMP.csv");
+        resOpenMP.open("export/openMP.csv", std::ios::app);
         if (!resOpenMP.is_open()) {
             std::cerr << "Could not open file export/openMP.csv" << std::endl;
             return -1;
