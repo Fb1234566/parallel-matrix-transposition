@@ -21,6 +21,8 @@ int main(int argc, char* argv[]) {
        Parameters:
            -h -> show help message
            -s <size> -> set the matrix size
+           -m <size> -> set the minimum size used for iteration (2^m)
+           -M <size> -> set the maximum size used for iteration (2^M)
     */
     if (argc == 1) {
         // checks if there are no arguments
@@ -108,6 +110,29 @@ int main(int argc, char* argv[]) {
     std::ofstream resSerial;
     std::ofstream resImpParallelism;
     std::ofstream resOpenMP;
+
+
+    resSerial.open("export/serial.csv", std::ios::app);
+    if (!resSerial.is_open()) {
+        std::cerr << "Could not open file export/serial.csv" << std::endl;
+        return -1;
+    }
+    resSerial << "iteration, time, size" << std::endl;
+
+    resImpParallelism.open("export/implicit_parallelism.csv", std::ios::app);
+    if (!resImpParallelism.is_open()) {
+        std::cerr << "Could not open file export/implicit_parallelism.csv" << std::endl;
+        return -1;
+    }
+    resImpParallelism << "iteration, time, size" << std::endl;
+
+    resOpenMP.open("export/openMP.csv", std::ios::app);
+    if (!resOpenMP.is_open()) {
+        std::cerr << "Could not open file export/openMP.csv" << std::endl;
+        return -1;
+    }
+    resOpenMP << "iteration, time, speedup, efficiency, size, threads" << std::endl;
+
     std::cout << "*********************************" << std::endl;
     std::cout << "* Parallel Matrix Transposition *" << std::endl;
     std::cout << "*********************************" << std::endl;
@@ -120,23 +145,16 @@ int main(int argc, char* argv[]) {
         std::cout << "Size: " << size << " : " << std::endl;
         /*---------Serial section---------*/
         std::cout << "[1] Parallel section:" << std::endl;
-        resSerial.open("export/serial.csv", std::ios::app);
-        if (!resSerial.is_open()) {
-            std::cerr << "Could not open file export/serial.csv" << std::endl;
-            return -1;
-        }
         bool sym = false;
         double sum_serial = 0.0;
-        resSerial << "iteration, time, size" << std::endl;
         for(int i = 0; i < 10; i++) {
-            const clock_t t0_seq = clock();
+            const double t0_ser = omp_get_wtime();
             sym = checkSym(M, size);
             T = matTranspose(M, size);
-            const clock_t t1_seq = clock();
-            sum_serial+=(static_cast<double>(t1_seq - t0_seq)) / CLOCKS_PER_SEC;
-            resSerial << i <<", " << (static_cast<double>(t1_seq - t0_seq)) / CLOCKS_PER_SEC << ", " << size << std::endl;
+            const double t1_ser = omp_get_wtime();
+            sum_serial+= t1_ser - t0_ser;
+            resSerial << i <<", " << t1_ser - t0_ser << ", " << size << std::endl;
         }
-        resSerial.close();
         if (sym) {
             std::cout<<"Matrix is symmetric!"<<std::endl;
         }
@@ -150,12 +168,6 @@ int main(int argc, char* argv[]) {
         std::cout << "[2] Implicit parallelization section:" << std::endl;
         bool sym_impl = false;
         double sum_impl = 0.0;
-        resImpParallelism.open("export/implicit_parallelism.csv", std::ios::app);
-        if (!resImpParallelism.is_open()) {
-            std::cerr << "Could not open file export/implicit_parallelism.csv" << std::endl;
-            return -1;
-        }
-        resImpParallelism << "iteration, time, size" << std::endl;
         for (unsigned int i = 0; i < 10; i++) {
             const clock_t t0_impl = clock();
             sym_impl = checkSymImp(M, size);
@@ -164,8 +176,6 @@ int main(int argc, char* argv[]) {
             sum_impl += (static_cast<double>(t1_impl - t0_impl)) / CLOCKS_PER_SEC;
             resImpParallelism << i << ", " << (static_cast<double>(t1_impl - t0_impl)) / CLOCKS_PER_SEC << ", " << size << std::endl;
         }
-        resImpParallelism.close();
-
         if (sym_impl) {
             std::cout<<"Matrix is symmetric!"<<std::endl;
         }
@@ -179,12 +189,6 @@ int main(int argc, char* argv[]) {
         std::cout << "-------------------------------------" << std::endl;
         std::cout << "[3]OpenMP section:" << std::endl;
         bool sym_omp = false;
-        resOpenMP.open("export/openMP.csv", std::ios::app);
-        if (!resOpenMP.is_open()) {
-            std::cerr << "Could not open file export/openMP.csv" << std::endl;
-            return -1;
-        }
-        resOpenMP << "iteration, time, speedup, efficiency, size, threads" << std::endl;
         for (int t = 1; t < 16; t++) { // repeat experiment using different number of threads
             std::cout << "Threads: " << t << std::endl;
             double sum_omp = 0.0;
@@ -215,8 +219,10 @@ int main(int argc, char* argv[]) {
             std::cout << "Efficiency: " << sum_efficiency/10.0 << std::endl;
             std::cout << "++++++++++++++++++++++++++++++++++" << std::endl;
         }
-        resOpenMP.close();
-    }
 
+    }
+    resSerial.close();
+    resImpParallelism.close();
+    resOpenMP.close();
     return 0;
 }
