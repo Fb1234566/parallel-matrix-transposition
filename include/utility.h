@@ -8,4 +8,8 @@ std::vector<std::vector<float>> initialize_matrix(unsigned int rows, unsigned in
 
 void printMatrix(const std::vector<std::vector<float>> &M, unsigned int rows, unsigned int cols);
 
+double computeSpeedup(double serialT, double parallelT);
+
+double computeEfficiency(double Speedup, int numThreads);
+
 #endif //__UTILITY_H__

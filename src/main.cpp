@@ -179,31 +179,44 @@ int main(int argc, char* argv[]) {
         std::cout << "-------------------------------------" << std::endl;
         std::cout << "[3]OpenMP section:" << std::endl;
         bool sym_omp = false;
-        double sum_omp = 0.0;
         resOpenMP.open("export/openMP.csv", std::ios::app);
         if (!resOpenMP.is_open()) {
             std::cerr << "Could not open file export/openMP.csv" << std::endl;
             return -1;
         }
-        resOpenMP << "iteration, time, size" << std::endl;
-        for (unsigned int i = 0; i < 10; i++) {
-            const double t0_omp = omp_get_wtime();
-            sym_omp = checkSymOMP(M, size);
-            T = matTransposeOMP(M, size);
-            const double t1_omp = omp_get_wtime();
-            sum_omp += (t1_omp - t0_omp);
-            resOpenMP << i << ", " << (t1_omp - t0_omp) << ", " << size << std::endl;
+        resOpenMP << "iteration, time, speedup, efficiency, size, threads" << std::endl;
+        for (int t = 1; t < 16; t++) { // repeat experiment using different number of threads
+            std::cout << "Threads: " << t << std::endl;
+            double sum_omp = 0.0;
+            double sum_speedup = 0.0;
+            double sum_efficiency = 0.0;
+            for (unsigned int i = 0; i < 10; i++) {
+                const double t0_omp = omp_get_wtime();
+                sym_omp = checkSymOMP(M, size, t);
+                T = matTransposeOMP(M, size, t);
+                const double t1_omp = omp_get_wtime();
+                sum_omp += (t1_omp - t0_omp);
+                double speedup = computeSpeedup(sum_serial/10.0, (t1_omp - t0_omp));
+                double efficiency = computeEfficiency(speedup, t);
+                sum_speedup += speedup;
+                sum_efficiency += efficiency;
+                resOpenMP << i << ", " << (t1_omp - t0_omp) << ", " << speedup << ", " << efficiency << ", " << size << ", " << t << std::endl;
+
+            }
+            if (sym_omp) {
+                std::cout<<"Matrix is symmetric!"<<std::endl;
+            }
+            else {
+                std::cout<<"Matrix is not symmetric!"<<std::endl;
+            }
+
+            std::cout << "Time: " << sum_omp/10.0<< " sec" << std::endl;
+            std::cout << "Speedup: " << sum_speedup/10.0 << std::endl;
+            std::cout << "Efficiency: " << sum_efficiency/10.0 << std::endl;
+            std::cout << "++++++++++++++++++++++++++++++++++" << std::endl;
         }
         resOpenMP.close();
-        if (sym_omp) {
-            std::cout<<"Matrix is symmetric!"<<std::endl;
-        }
-        else {
-            std::cout<<"Matrix is not symmetric!"<<std::endl;
-        }
-
-        std::cout << "Time: " << sum_omp/10.0<< " sec" << std::endl;
-        std::cout << "++++++++++++++++++++++++++++++++++" << std::endl;
     }
+
     return 0;
 }

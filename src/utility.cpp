@@ -31,3 +31,11 @@ void printMatrix(const std::vector<std::vector<float>> &M, const unsigned int ro
         std::cout << std::endl;
     }
 }
+
+double computeSpeedup(const double serialT, const double parallelT) {
+    return (serialT / parallelT);
+}
+
+double computeEfficiency(const double Speedup, const int numThreads) {
+    return (Speedup/numThreads) * 100;
+}
