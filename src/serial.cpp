@@ -26,7 +26,12 @@ bool checkSym (const std::vector<std::vector<float>>& m, const unsigned int size
             - size: dimensions of the matrix.
     */
 
-    std::vector<std::vector<float>> m_transposed(size, std::vector<float>(size));
-    m_transposed = matTranspose(m, size);
-    return m==m_transposed;
+    for (unsigned int i = 0; i < size; i++) {
+        for (unsigned int j = 0; j < size; j++) {
+            if (m[i][j] != m[j][i]) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

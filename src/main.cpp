@@ -84,6 +84,7 @@ int main(int argc, char* argv[]) {
     for(int i = 0; i < 10; i++) {
         const clock_t t0_seq = clock();
         sym = checkSym(M, size);
+        T = matTranspose(M, size);
         const clock_t t1_seq = clock();
         sum_serial+=(static_cast<double>(t1_seq - t0_seq)) / CLOCKS_PER_SEC;
     }
