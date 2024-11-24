@@ -2,12 +2,12 @@
 This program performs parallel transposition of matrices. Below are the instructions to build and run the program.
 
 ## Index
-- [Build Instructions](#build-instructions)
 - [Repository Structure](#repository-structure)
   - [Main Branch](#main-branch)
   - [LoopUnroll Branch](#loopunroll-branch)
   - [Vectorization Branch](#vectorization-branch)
   - [Vectorization_loopUnroll Branch](#vectorization_loopunroll-branch)
+- [Build Instructions](#build-instructions)
 - [Execution Instructions](#execution-instructions)
     - [Examples](#examples)
     - [Expected Output](#expected-output)
