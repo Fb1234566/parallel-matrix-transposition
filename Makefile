@@ -38,3 +38,8 @@ run: $(obj_files)
 	mkdir export && \
 	mkdir bin/run -p && \
 	g++ $(obj_files) bin/obj/main.o -o bin/run/a.out -std=c++11 -fopenmp
+
+.PHONY: clean
+clean:
+	rm -rf export && \
+	rm -rf bin
