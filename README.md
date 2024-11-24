@@ -1,5 +1,6 @@
 # Parallel Matrix Transposition
-This program performs parallel transposition of matrices. Below are the instructions to build and run the program.
+This program performs parallel transposition of matrices. In this branch, the only optimization flags passed for the implicit 
+parallelization are `-msse3 -mfpmath=sse -funroll-loops -std=c++11`. Below are the instructions to build and run the program. 
 
 ## Index 
 - [Build Instructions](#build-instructions) 
