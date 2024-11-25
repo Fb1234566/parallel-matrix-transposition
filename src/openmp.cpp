@@ -34,7 +34,7 @@ bool checkSymOMP (const std::vector<std::vector<float>>& m, const unsigned int s
     omp_set_num_threads(threads);
     #pragma omp parallel
     {
-        #pragma omp for collapse(2) reduction(||:res)
+        #pragma omp for collapse(2) reduction(+:res)
         for(unsigned int i = 0; i < size; i++) {
             for(unsigned int j = 0; j < size; j++) {
                 res += (m[i][j] == m[j][i]);
