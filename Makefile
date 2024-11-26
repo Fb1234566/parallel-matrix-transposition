@@ -11,7 +11,7 @@ utility_cpp_files := $(shell find src -name utility.cpp)
 utility_obj_files := $(patsubst src/%.cpp, bin/obj/%.o, $(utility_cpp_files))
 
 CPPFLAGSSR = -Iinclude -fopenmp -std=c++11 # serial compilation flags
-CPPFLAGSIM = -Iinclude -ftree-vectorize -msse3 -mfpmath=sse -funroll-loops -std=c++11 # implicit parallelism cserial_cpp_filesompilation flags
+CPPFLAGSIM = -Iinclude -msse3 -mfpmath=sse -O2 -std=c++11 # implicit parallelism cserial_cpp_filesompilation flags
 
 
 obj_files := $(serial_obj_files) $(implicit_parallelism_obj_files) $(utility_obj_files) $(openmp_obj_files)
