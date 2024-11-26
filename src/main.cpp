@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
         /* Setup matrix to be transposed */
         std::vector<std::vector<float>> M (size, std::vector<float>(size));
         std::vector<std::vector<float>> T (size, std::vector<float>(size));
-        M = initialize_matrix(size, size);
+        M = initializeMatrix(size, size);
         std::cout << "Size: " << size << " : " << std::endl;
         /*---------Serial section---------*/
         std::cout << "[1] Parallel section:" << std::endl;
