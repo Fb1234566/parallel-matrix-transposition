@@ -24,6 +24,10 @@ overview of the structure and purpose of each branch:
 - Focuses on implementing and testing the implicit parallelization by enabling only automatic vectorization.
 ### Vectorization_loopUnroll Branch
 - Focuses on implementing and testing the implicit parallelization by enabling automatic loop unrolling and automatic vectorization.
+### O1 Branch
+- Focuses on implementing and testing implicit parallelization by enabling all optimizations from the O1 compilation flag.
+### O2 Branch
+- Focuses on implementing and testing implicit parallelization by enabling all optimizations from the O2 compilation flag.
 
 ## Build instructions
 To build the final executable use the following command:
@@ -36,7 +40,7 @@ To delete the folders and files created with the previous command, use:
 make clean
 ```
 
-The final executable will be located at `` bin/run/a.out ``.
+The final executable will be located at `` bin/run/main.out ``.
 
 ## Execution instructions
 The executable generated using the steps in the [Build instructions](#build-intructions)
