@@ -1,29 +1,11 @@
 # Parallel Matrix Transposition
-This program performs parallel transposition of matrices. Below are the instructions to build and run the program.
+This branch performs parallel transposition of matrices, focusing on implementing and testing implicit parallelization by enabling all optimizations from the O1 compilation. Below are the instructions to build and run the program.
 
 ## Index
-- [Repository Structure](#repository-structure)
-  - [Main Branch](#main-branch)
-  - [LoopUnroll Branch](#loopunroll-branch)
-  - [Vectorization Branch](#vectorization-branch)
-  - [Vectorization_loopUnroll Branch](#vectorization_loopunroll-branch)
 - [Build Instructions](#build-instructions)
 - [Execution Instructions](#execution-instructions)
     - [Examples](#examples)
     - [Expected Output](#expected-output)
-
-## Repository structure
-This repository is organized into several branches, each focusing on different aspects of the project. Below is a brief 
-overview of the structure and purpose of each branch: 
-### Main Branch
-- Contains the core implementation of the parallel matrix transposition program. 
-- Includes the primary README and documentation. 
-### LoopUnroll Branch
-- Focuses on implementing and testing the implicit parallelization by enabling only automatic loop unrolling.  
-### Vectorization Branch
-- Focuses on implementing and testing the implicit parallelization by enabling only automatic vectorization.
-### Vectorization_loopUnroll Branch
-- Focuses on implementing and testing the implicit parallelization by enabling automatic loop unrolling and automatic vectorization.
 
 ## Build instructions
 To build the final executable use the following command:
