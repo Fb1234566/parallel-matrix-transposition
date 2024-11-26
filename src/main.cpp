@@ -189,7 +189,7 @@ int main(int argc, char* argv[]) {
         std::cout << "-------------------------------------" << std::endl;
         std::cout << "[3]OpenMP section:" << std::endl;
         bool sym_omp = false;
-        for (int t = 1; t < 16; t++) { // repeat experiment using different number of threads
+        for (int t = 1; t <65; t=t*2) { // repeat experiment using different number of threads
             std::cout << "Threads: " << t << std::endl;
             double sum_omp = 0.0;
             double sum_speedup = 0.0;
