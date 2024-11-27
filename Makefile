@@ -35,9 +35,9 @@ $(utility_obj_files): bin/obj/%.o : src/%.cpp
 .PHONY: run
 run: $(obj_files)
 	g++ src/main.cpp -c -o bin/obj/main.o $(CPPFLAGSSR) && \
-	mkdir export && \
+	mkdir export/O2 -p && \
 	mkdir bin/run -p && \
-	g++ $(obj_files) bin/obj/main.o -o bin/run/a.out -std=c++11 -fopenmp
+	g++ $(obj_files) bin/obj/main.o -o bin/run/O2.out -std=c++11 -fopenmp
 
 .PHONY: clean
 clean:
