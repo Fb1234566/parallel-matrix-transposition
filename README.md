@@ -18,7 +18,7 @@ To delete the folders and files created with the previous command, use:
 make clean
 ```
 
-The final executable will be located at `` bin/run/a.out ``.
+The final executable will be located at `` bin/run/O1.out ``.
 
 ## Execution instructions
 The executable generated using the steps in the [Build instructions](#build-intructions)
