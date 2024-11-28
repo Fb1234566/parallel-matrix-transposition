@@ -12,4 +12,10 @@ double computeSpeedup(double serialT, double parallelT);
 
 double computeEfficiency(double Speedup, int numThreads);
 
+bool checkSymCorrectness(bool sym, const std::vector<std::vector<float>> &M, unsigned int rows, unsigned int cols);
+
+bool checkTranspositionCorrectness(const std::vector<std::vector<float>> &M, const std::vector<std::vector<float>> &T, unsigned int rows, unsigned int cols);
+
+void checkCorrect(bool sym, const std::vector<std::vector<float>> &M, const std::vector<std::vector<float>> &T, unsigned int rows, unsigned int cols);
+
 #endif //__UTILITY_H__
