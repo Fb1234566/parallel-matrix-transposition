@@ -112,23 +112,23 @@ int main(int argc, char* argv[]) {
     std::ofstream resOpenMP;
 
 
-    resSerial.open("export/main/serial.csv", std::ios::app);
+    resSerial.open("export/vectorization/serial.csv", std::ios::app);
     if (!resSerial.is_open()) {
-        std::cerr << "Could not open file export/serial.csv" << std::endl;
+        std::cerr << "Could not open file export/vectorization/serial.csv" << std::endl;
         return -1;
     }
     resSerial << "iteration, time, size" << std::endl;
 
-    resImpParallelism.open("export/main/implicit_parallelism.csv", std::ios::app);
+    resImpParallelism.open("export/vectorization/implicit_parallelism.csv", std::ios::app);
     if (!resImpParallelism.is_open()) {
-        std::cerr << "Could not open file export/implicit_parallelism.csv" << std::endl;
+        std::cerr << "Could not open file export/vectorization/implicit_parallelism.csv" << std::endl;
         return -1;
     }
     resImpParallelism << "iteration, time, size" << std::endl;
 
-    resOpenMP.open("export/main/openMP.csv", std::ios::app);
+    resOpenMP.open("export/vectorization/openMP.csv", std::ios::app);
     if (!resOpenMP.is_open()) {
-        std::cerr << "Could not open file export/openMP.csv" << std::endl;
+        std::cerr << "Could not open file export/vectorization/openMP.csv" << std::endl;
         return -1;
     }
     resOpenMP << "iteration, time, speedup, efficiency, size, threads" << std::endl;
