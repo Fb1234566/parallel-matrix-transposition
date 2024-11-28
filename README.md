@@ -1,7 +1,6 @@
 # Parallel Matrix Transposition
-This program performs parallel transposition of matrices. In this branch, the only optimization flags passed for the implicit 
-parallelization are `-msse3 -mfpmath=sse -funroll-loops -std=c++11`. Below are the instructions to build and run the program. 
-
+This branch performs parallel transposition of matrices, focusing on implementing and testing implicit parallelization 
+by enabling only the loop unrolling optimization (`-funroll-loops`) and SSE3 (`-msse3 -mfpmath=sse`).
 ## Index 
 - [Build Instructions](#build-instructions) 
 - [Execution Instructions](#execution-instructions) 
@@ -20,7 +19,7 @@ To delete the folders and files created with the previous command, use:
 make clean
 ```
 
-The final executable will be located at `` bin/run/a.out ``.
+The final executable will be located at `` bin/run/loopUnroll.out ``.
 
 ## Execution instructions
 The executable generated using the steps in the [Build instructions](#build-intructions)
