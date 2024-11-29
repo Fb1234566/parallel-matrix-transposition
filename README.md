@@ -19,7 +19,7 @@ To delete the folders and files created with the previous command, use:
 make clean
 ```
 
-The final executable will be located at `` bin/run/loopUnroll.out ``.
+The final executable will be located at `` bin/run/vectorization.out ``.
 
 ## Execution instructions
 The executable generated using the steps in the [Build instructions](#build-intructions)
@@ -41,12 +41,12 @@ Note: The two ways of passing the matrix size cannot be used simultaneously.
 
 Set a single matrix size:
 ```shell
-./bin/run/a.out -s 12 # sizes: 2^12
+./bin/run/vectorization.out -s 12 # sizes: 2^12
 ```
 
 Set a range of matrix sizes:
 ```shell
-./bin/run/a.out -m 4 -M 12 # sizes: 2^4 -> 2^12
+./bin/run/vectorization.out -m 4 -M 12 # sizes: 2^4 -> 2^12
 ```
 
 ### Expected Output
