@@ -40,12 +40,12 @@ Note: The two ways of passing the matrix size cannot be used simultaneously.
 
 Set a single matrix size:
 ```shell
-./bin/run/a.out -s 12 # sizes: 2^12
+./bin/run/O1.out -s 12 # sizes: 2^12
 ```
 
 Set a range of matrix sizes:
 ```shell
-./bin/run/a.out -m 4 -M 12 # sizes: 2^4 -> 2^12
+./bin/run/O1.out -m 4 -M 12 # sizes: 2^4 -> 2^12
 ```
 
 ### Expected Output
