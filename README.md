@@ -1,6 +1,6 @@
 # Parallel Matrix Transposition
 This branch performs parallel transposition of matrices, focusing on implementing and testing OpenMP parallelization using 
-static scheduling.
+dynamic scheduling.
 ## Index
 - [Build Instructions](#build-instructions)
 - [Execution Instructions](#execution-instructions)
