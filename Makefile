@@ -35,9 +35,9 @@ $(utility_obj_files): bin/obj/%.o : src/%.cpp
 .PHONY: run
 run: $(obj_files)
 	g++ src/main.cpp -c -o bin/obj/main.o $(CPPFLAGSSR) && \
-	mkdir export/staticScheduling -p && \
+	mkdir export/dynamicScheduling -p && \
 	mkdir bin/run -p && \
-	g++ $(obj_files) bin/obj/main.o -o bin/run/staticScheduling.out -std=c++11 -fopenmp
+	g++ $(obj_files) bin/obj/main.o -o bin/run/dynamicScheduling.out -std=c++11 -fopenmp
 
 .PHONY: clean
 clean:
