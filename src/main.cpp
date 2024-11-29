@@ -112,23 +112,23 @@ int main(int argc, char* argv[]) {
     std::ofstream resOpenMP;
 
 
-    resSerial.open("export/serial.csv", std::ios::app);
+    resSerial.open("export/vectorization_loopUnroll/serial.csv", std::ios::app);
     if (!resSerial.is_open()) {
-        std::cerr << "Could not open file export/serial.csv" << std::endl;
+        std::cerr << "Could not open file export/vectorization_loopUnroll/serial.csv" << std::endl;
         return -1;
     }
     resSerial << "iteration, time, size" << std::endl;
 
-    resImpParallelism.open("export/implicit_parallelism.csv", std::ios::app);
+    resImpParallelism.open("export/vectorization_loopUnroll/implicit_parallelism.csv", std::ios::app);
     if (!resImpParallelism.is_open()) {
-        std::cerr << "Could not open file export/implicit_parallelism.csv" << std::endl;
+        std::cerr << "Could not open file export/vectorization_loopUnroll/implicit_parallelism.csv" << std::endl;
         return -1;
     }
     resImpParallelism << "iteration, time, size" << std::endl;
 
-    resOpenMP.open("export/openMP.csv", std::ios::app);
+    resOpenMP.open("export/vectorization_loopUnroll/openMP.csv", std::ios::app);
     if (!resOpenMP.is_open()) {
-        std::cerr << "Could not open file export/openMP.csv" << std::endl;
+        std::cerr << "Could not open file export/vectorization_loopUnroll/openMP.csv" << std::endl;
         return -1;
     }
     resOpenMP << "iteration, time, speedup, efficiency, size, threads" << std::endl;
@@ -141,16 +141,21 @@ int main(int argc, char* argv[]) {
         /* Setup matrix to be transposed */
         std::vector<std::vector<float>> M (size, std::vector<float>(size));
         std::vector<std::vector<float>> T (size, std::vector<float>(size));
-        M = initialize_matrix(size, size);
+        M = initializeMatrix(size, size);
         std::cout << "Size: " << size << " : " << std::endl;
         /*---------Serial section---------*/
-        std::cout << "[1] Parallel section:" << std::endl;
+        std::cout << "[1] Serial section:" << std::endl;
         bool sym = false;
         double sum_serial = 0.0;
         for(int i = 0; i < 10; i++) {
             const double t0_ser = omp_get_wtime();
             sym = checkSym(M, size);
-            T = matTranspose(M, size);
+            if (!sym) {
+                T = matTranspose(M, size);
+            }
+            else {
+                T = M;
+            }
             const double t1_ser = omp_get_wtime();
             sum_serial+= t1_ser - t0_ser;
             resSerial << i <<", " << t1_ser - t0_ser << ", " << size << std::endl;
@@ -171,7 +176,12 @@ int main(int argc, char* argv[]) {
         for (unsigned int i = 0; i < 10; i++) {
             const clock_t t0_impl = clock();
             sym_impl = checkSymImp(M, size);
-            T = matTransposeImp(M, size);
+            if (!sym_impl) {
+                T = matTransposeImp(M, size);
+            }
+            else {
+                T = M;
+            }
             const clock_t t1_impl = clock();
             sum_impl += (static_cast<double>(t1_impl - t0_impl)) / CLOCKS_PER_SEC;
             resImpParallelism << i << ", " << (static_cast<double>(t1_impl - t0_impl)) / CLOCKS_PER_SEC << ", " << size << std::endl;
@@ -187,9 +197,9 @@ int main(int argc, char* argv[]) {
 
         /*---------OMP parallel section---------*/
         std::cout << "-------------------------------------" << std::endl;
-        std::cout << "[3]OpenMP section:" << std::endl;
+        std::cout << "[3] OpenMP section:" << std::endl;
         bool sym_omp = false;
-        for (int t = 1; t < 16; t++) { // repeat experiment using different number of threads
+        for (int t = 1; t <65; t=t*2) { // repeat experiment using different number of threads
             std::cout << "Threads: " << t << std::endl;
             double sum_omp = 0.0;
             double sum_speedup = 0.0;
@@ -197,7 +207,12 @@ int main(int argc, char* argv[]) {
             for (unsigned int i = 0; i < 10; i++) {
                 const double t0_omp = omp_get_wtime();
                 sym_omp = checkSymOMP(M, size, t);
-                T = matTransposeOMP(M, size, t);
+                if (!sym_omp) {
+                    T = matTransposeOMP(M, size, t);
+                }
+                else {
+                    T = M;
+                }
                 const double t1_omp = omp_get_wtime();
                 sum_omp += (t1_omp - t0_omp);
                 double speedup = computeSpeedup(sum_serial/10.0, (t1_omp - t0_omp));
