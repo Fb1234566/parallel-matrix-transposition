@@ -112,23 +112,23 @@ int main(int argc, char* argv[]) {
     std::ofstream resOpenMP;
 
 
-    resSerial.open("export/dynamicScheduling/serial.csv", std::ios::app);
+    resSerial.open("export/guidedScheduling/serial.csv", std::ios::app);
     if (!resSerial.is_open()) {
-        std::cerr << "Could not open file export/dynamicScheduling/serial.csv" << std::endl;
+        std::cerr << "Could not open file export/guidedScheduling/serial.csv" << std::endl;
         return -1;
     }
     resSerial << "iteration, time, size" << std::endl;
 
-    resImpParallelism.open("export/dynamicScheduling/implicit_parallelism.csv", std::ios::app);
+    resImpParallelism.open("export/guidedScheduling/implicit_parallelism.csv", std::ios::app);
     if (!resImpParallelism.is_open()) {
-        std::cerr << "Could not open file export/dynamicScheduling/implicit_parallelism.csv" << std::endl;
+        std::cerr << "Could not open file export/guidedScheduling/implicit_parallelism.csv" << std::endl;
         return -1;
     }
     resImpParallelism << "iteration, time, size" << std::endl;
 
-    resOpenMP.open("export/dynamicScheduling/openMP.csv", std::ios::app);
+    resOpenMP.open("export/guidedScheduling/openMP.csv", std::ios::app);
     if (!resOpenMP.is_open()) {
-        std::cerr << "Could not open file export/dynamicScheduling/openMP.csv" << std::endl;
+        std::cerr << "Could not open file export/guidedScheduling/openMP.csv" << std::endl;
         return -1;
     }
     resOpenMP << "iteration,time,speedup,efficiency,size,threads" << std::endl;
