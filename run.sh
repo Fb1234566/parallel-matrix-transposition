@@ -12,7 +12,7 @@ cat >$outputFile <<EOL
 # Queue name
 #PBS -q short_cpuQ
 # Set the maximum wall time
-#PBS -l walltime=0:10:00
+#PBS -l walltime=0:20:00
 # Number of nodes, cpus, mpi processors and amount of memory
 #PBS -l select=1:ncpus=64:ompthreads=64:mem=1mb
 
