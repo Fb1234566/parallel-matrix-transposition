@@ -31,7 +31,7 @@ overview of the structure and purpose of each branch:
 
 ## Architecture
 The simulation has been run on the cluster of the University of Trento using `ncpus=64`, `ompthreads=64` and `mem=1mb`
-on the `short_cpuQ`.U
+on the `short_cpuQ`. The gcc version is: 9.1.0.
 ## Build instructions
 To build the final executable use the following command:
 ```shell 
