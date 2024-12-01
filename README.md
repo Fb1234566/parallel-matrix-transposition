@@ -29,6 +29,9 @@ overview of the structure and purpose of each branch:
 ### O2 Branch
 - Focuses on implementing and testing implicit parallelization by enabling all optimizations from the O2 compilation flag.
 
+## Architecture
+The simulation has been run on the cluster of the University of Trento using `ncpus=64`, `ompthreads=64` and `mem=1mb`
+on the `short_cpuQ`.U
 ## Build instructions
 To build the final executable use the following command:
 ```shell 
@@ -39,8 +42,15 @@ To delete the folders and files created with the previous command, use:
 ```shell
 make clean
 ```
-
 The final executable will be located at `` bin/run/main.out ``.
+### Generating a .pbs
+A .pbs for execution can be generated using the `run.sh`. 
+Syntax:
+```bash
+./run.sh <path to the repository root directory>
+```
+
+
 
 ## Execution instructions
 The executable generated using the steps in the [Build instructions](#build-intructions)
@@ -74,4 +84,6 @@ Set a range of matrix sizes:
 
 When you run the program with the above commands, you should see whether the matrix is symmetric, the time it took to 
 compute both the matrix's symmetry and its transposition for each algorithm (serial, implicit parallelism, and OpenMP), 
-and for OpenMP, also the efficiency and speedup.
+and for OpenMP, also the efficiency and speedup.\
+The program saves the execution statistics in the export folder. The data is saved in .csv file.
+
