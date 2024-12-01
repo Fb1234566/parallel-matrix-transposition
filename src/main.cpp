@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
         for(int i = 0; i < 10; i++) {
             const double t0_ser = omp_get_wtime();
             sym = checkSym(M, size);
-            if (sym) {
+            if (!sym) {
                 T = matTranspose(M, size);
             }
             else {
@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
         for (unsigned int i = 0; i < 10; i++) {
             const clock_t t0_impl = clock();
             sym_impl = checkSymImp(M, size);
-            if (sym_impl) {
+            if (!sym_impl) {
                 T = matTransposeImp(M, size);
             }
             else {
@@ -207,7 +207,7 @@ int main(int argc, char* argv[]) {
             for (unsigned int i = 0; i < 10; i++) {
                 const double t0_omp = omp_get_wtime();
                 sym_omp = checkSymOMP(M, size, t);
-                if (sym_omp) {
+                if (!sym_omp) {
                     T = matTransposeOMP(M, size, t);
                 }
                 else {
