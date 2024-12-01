@@ -44,7 +44,7 @@ make clean
 ```
 The final executable will be located at `` bin/run/main.out ``.
 ### Generating a .pbs
-A .pbs for execution can be generated using the `run.sh`. 
+A .pbs file for execution can be generated using the `run.sh` bash file. 
 Syntax:
 ```bash
 ./run.sh <path to the repository root directory>
